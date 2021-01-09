@@ -6,10 +6,19 @@
 #include <curl/curl.h>
 #include "../cJSON/cJSON.h"
 
-#define N 12
-#define K 9
+#define N 20
+#define K 20
 
-int zero (int taba[N][K]);
-void zapisz(FILE *fout, int taba[N][K]);
+int zero (int a,int b,int taba[a][b]);
+void zapisz(FILE *fout,int a, int b, int taba[N][K]);
+int krance (int taba[N][K]);
+void odwroc(int a,int b, int taba[a][b]);
+
+int ykoniec (int taba[N][K]);
+void przepisz(int a, int b, int mapa[a][b], int taba[N][K]);
+int xkoniec (int taba[N][K]);
+
+void ruchkoniec(int a, int b, int mapa[a][b]);
+void ruchzero( int a, int b, int mapa[a][b]);
 
 #endif

@@ -8,14 +8,6 @@ int daj_x(cJSON *cus)
     return atof(cJSON_Print(name));
 }
 
-cJSON * daj_xc(cJSON *cus)
-{
-    cJSON *pay = cJSON_GetObjectItemCaseSensitive(cus, "payload");
-    cJSON *name = cJSON_GetObjectItemCaseSensitive(pay, "current_x");
-    cJSON_Delete(pay);
-    return name;
-}
-
 int daj_y(cJSON *cus)
 {
     cJSON *pay = cJSON_GetObjectItemCaseSensitive(cus, "payload");
@@ -35,28 +27,6 @@ char * daj_kier(cJSON *cus)
     cJSON *pay = cJSON_GetObjectItemCaseSensitive(cus, "payload");
     cJSON *name = cJSON_GetObjectItemCaseSensitive(pay, "direction");
     return cJSON_Print(name);
-}
-
-cJSON *  daj_exp(cJSON *cus, int i) // można zrobić cjsona i dzieki temu łatwo zwalniać
-{
-    if(i==1)
-    {
-    cJSON *pay = cJSON_GetObjectItemCaseSensitive(cus, "payload");
-    cJSON *name = cJSON_GetObjectItemCaseSensitive(pay, "list");
-    return name->child;
-    }
-    else if(i==2)
-    {
-    cJSON *pay = cJSON_GetObjectItemCaseSensitive(cus, "payload");
-    cJSON *name = cJSON_GetObjectItemCaseSensitive(pay, "list");
-    return name->child->next;
-    }
-    else if(i==3)
-    {
-    cJSON *pay = cJSON_GetObjectItemCaseSensitive(cus, "payload");
-    cJSON *name = cJSON_GetObjectItemCaseSensitive(pay, "list");
-    return name->child->next->next;
-    }
 }
 
 int daj_xe(cJSON *cus)
@@ -109,50 +79,14 @@ int zwroc_enr_pola(cJSON *a)
         }
 }
 
-void wypisz(int tab[N][K])
+void wypisz(int a,int b,int tab[a][b])
 {
-    for( int i=0;i<N;i++)
+    for( int i=0;i<a;i++)
         {
-            for(int j=0;j<K;j++)
+            for(int j=0;j<b;j++)
             {
             printf("%d ",tab[i][j]);
             }
             printf("\n");
         }
-}
-
-cJSON *cinfo(char *url)
-{
-    //Memory *pamiontka;
-    //pamiontka=(Memory*)malloc(sizeof(Memory));
-    //pamiontka->size=0;
-    //char bufor[2048];
-    //pamiontka->response = make_request(url);
-    //strcpy(bufor,pamiontka->response);
-    //free(pamiontka->response);
-
-    //return cJSON_Parse(&bufor[178]);
-}
-
-cJSON *cex(char *url, int i)
-{   
-    cJSON *cus=make_request(url);
-    if(i==1)
-    {
-    cJSON *pay = cJSON_GetObjectItemCaseSensitive(cus, "payload");
-    cJSON *name = cJSON_GetObjectItemCaseSensitive(pay, "list");
-    return name->child;
-    }
-    else if(i==2)
-    {
-    cJSON *pay = cJSON_GetObjectItemCaseSensitive(cus, "payload");
-    cJSON *name = cJSON_GetObjectItemCaseSensitive(pay, "list");
-    return name->child->next;
-    }
-    else if(i==3)
-    {
-    cJSON *pay = cJSON_GetObjectItemCaseSensitive(cus, "payload");
-    cJSON *name = cJSON_GetObjectItemCaseSensitive(pay, "list");
-    return name->child->next->next;
-    }
 }
