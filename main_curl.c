@@ -36,7 +36,10 @@ int main(int argc, char **argv)
     cJSON *cus=make_request(url_info);
     cJSON *c = cJSON_GetObjectItemCaseSensitive(cus, "payload") ;
     cJSON *name = cJSON_GetObjectItemCaseSensitive(c, "step");
-    printf("STEP : %d\n", atoi(cJSON_Print(name))-1);
+    char *dd=cJSON_Print(name);
+    int g=atoi(dd);
+    cJSON_free(dd);
+    printf("STEP : %d\n", g-1);
     odwroc(d,e,nowa);
     wypisz(d,e,nowa);
     zapisz(fout ,d,e, nowa);

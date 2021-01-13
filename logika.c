@@ -118,9 +118,9 @@ void ruchkoniec( int a, int b, int mapa[a][b])
     char *url_exp =  "http://edi.iem.pw.edu.pl:30000/worlds/api/v1/worlds/explore/qwerty_1" ;
 
     cJSON *cus = make_request(url_info);
-    char *x=daj_x(cus);
-    char *y=daj_y(cus);
-    mapa[atoi(y)][atoi(x)]=zwroc_nr_pola(cus);
+    int x=daj_x(cus);
+    int y=daj_y(cus);
+    mapa[y][x]=zwroc_nr_pola(cus);
     char *kierunek=daj_kier(cus);
     
 
@@ -132,7 +132,7 @@ void ruchkoniec( int a, int b, int mapa[a][b])
 
   if(strcmp(kierunek, "\"N\"") == 0)                    
  {
-    if(mapa[1+atoi(y)][atoi(x)]==0 || mapa[1+atoi(y)][atoi(x)-1]==0 || mapa[1+atoi(y)][atoi(x)+1]==0)
+    if(mapa[1+y][x]==0 || mapa[1+y][x-1]==0 || mapa[1+y][x+1]==0)
     {
     cJSON *zmienna = make_request(url_exp);
     cJSON *pay = cJSON_GetObjectItemCaseSensitive(zmienna, "payload");
@@ -142,34 +142,27 @@ void ruchkoniec( int a, int b, int mapa[a][b])
     cJSON *ex2=name->child->next;
     cJSON *ex3=name->child->next->next;
     
-    char *x=daj_xe(ex1);
-    char *y=daj_ye(ex1);
+    int x=daj_xe(ex1);
+    int y=daj_ye(ex1);
     
-    mapa[atoi(y)][atoi(x)]=zwroc_enr_pola(ex1);
+    mapa[y][x]=zwroc_enr_pola(ex1);
     
-    cJSON_free(x);
-    cJSON_free(y);
     y=daj_ye(ex2);
     x=daj_xe(ex2);
 
-    mapa[atoi(y)][atoi(x)]=zwroc_enr_pola(ex2);
+    mapa[y][x]=zwroc_enr_pola(ex2);
 
-    cJSON_free(x);
-    cJSON_free(y);
     y=daj_ye(ex3);
     x=daj_xe(ex3);
 
-    mapa[atoi(y)][atoi(x)]=zwroc_enr_pola(ex3);
-
-    cJSON_free(x);
-    cJSON_free(y);
+    mapa[y][x]=zwroc_enr_pola(ex3);
 
     cJSON_Delete(zmienna);
     }
  }
  else if(strcmp(kierunek, "\"E\"") == 0)
  {
-    if(mapa[-1+atoi(y)][atoi(x)+1]==0 || mapa[atoi(y)][atoi(x)+1]==0 || mapa[1+atoi(y)][atoi(x)+1]==0)
+    if(mapa[-1+y][x+1]==0 || mapa[y][x+1]==0 || mapa[1+y][x+1]==0)
     {
     cJSON *zmienna = make_request(url_exp);
     cJSON *pay = cJSON_GetObjectItemCaseSensitive(zmienna, "payload");
@@ -179,34 +172,27 @@ void ruchkoniec( int a, int b, int mapa[a][b])
     cJSON *ex2=name->child->next;
     cJSON *ex3=name->child->next->next;
     
-    char *x=daj_xe(ex1);
-    char *y=daj_ye(ex1);
+    int x=daj_xe(ex1);
+    int y=daj_ye(ex1);
     
-    mapa[atoi(y)][atoi(x)]=zwroc_enr_pola(ex1);
+    mapa[y][x]=zwroc_enr_pola(ex1);
     
-    cJSON_free(x);
-    cJSON_free(y);
     y=daj_ye(ex2);
     x=daj_xe(ex2);
 
-    mapa[atoi(y)][atoi(x)]=zwroc_enr_pola(ex2);
+    mapa[y][x]=zwroc_enr_pola(ex2);
 
-    cJSON_free(x);
-    cJSON_free(y);
     y=daj_ye(ex3);
     x=daj_xe(ex3);
 
-    mapa[atoi(y)][atoi(x)]=zwroc_enr_pola(ex3);
-
-    cJSON_free(x);
-    cJSON_free(y);
+    mapa[y][x]=zwroc_enr_pola(ex3);
 
     cJSON_Delete(zmienna);
     }
  }
  else if(strcmp(kierunek, "\"S\"") == 0)            
  {
-    if(mapa[-1+atoi(y)][atoi(x)+1]==0 || mapa[-1+atoi(y)][atoi(x)-1]==0 || mapa[-1+atoi(y)][atoi(x)]==0)
+    if(mapa[-1+y][x+1]==0 || mapa[-1+y][x-1]==0 || mapa[-1+y][x]==0)
     {
     cJSON *zmienna = make_request(url_exp);
         cJSON *pay = cJSON_GetObjectItemCaseSensitive(zmienna, "payload");
@@ -216,34 +202,27 @@ void ruchkoniec( int a, int b, int mapa[a][b])
     cJSON *ex2=name->child->next;
     cJSON *ex3=name->child->next->next;
     
-    char *x=daj_xe(ex1);
-    char *y=daj_ye(ex1);
+    int x=daj_xe(ex1);
+    int y=daj_ye(ex1);
     
-    mapa[atoi(y)][atoi(x)]=zwroc_enr_pola(ex1);
+    mapa[y][x]=zwroc_enr_pola(ex1);
     
-    cJSON_free(x);
-    cJSON_free(y);
     y=daj_ye(ex2);
     x=daj_xe(ex2);
 
-    mapa[atoi(y)][atoi(x)]=zwroc_enr_pola(ex2);
+    mapa[y][x]=zwroc_enr_pola(ex2);
 
-    cJSON_free(x);
-    cJSON_free(y);
     y=daj_ye(ex3);
     x=daj_xe(ex3);
 
-    mapa[atoi(y)][atoi(x)]=zwroc_enr_pola(ex3);
-
-    cJSON_free(x);
-    cJSON_free(y);
+    mapa[y][x]=zwroc_enr_pola(ex3);
 
     cJSON_Delete(zmienna);
     }
  }
  else if(strcmp(kierunek, "\"W\"") == 0)
  {
-    if(mapa[-1+atoi(y)][atoi(x)-1]==0 || mapa[atoi(y)][atoi(x)-1]==0 || mapa[1+atoi(y)][atoi(x)-1]==0)
+    if(mapa[-1+y][x-1]==0 || mapa[y][x-1]==0 || mapa[1+y][x-1]==0)
     {
     cJSON *zmienna = make_request(url_exp);
     cJSON *pay = cJSON_GetObjectItemCaseSensitive(zmienna, "payload");
@@ -253,27 +232,20 @@ void ruchkoniec( int a, int b, int mapa[a][b])
     cJSON *ex2=name->child->next;
     cJSON *ex3=name->child->next->next;
     
-    char *x=daj_xe(ex1);
-    char *y=daj_ye(ex1);
+    int x=daj_xe(ex1);
+    int y=daj_ye(ex1);
     
-    mapa[atoi(y)][atoi(x)]=zwroc_enr_pola(ex1);
+    mapa[y][x]=zwroc_enr_pola(ex1);
     
-    cJSON_free(x);
-    cJSON_free(y);
     y=daj_ye(ex2);
     x=daj_xe(ex2);
 
-    mapa[atoi(y)][atoi(x)]=zwroc_enr_pola(ex2);
+    mapa[y][x]=zwroc_enr_pola(ex2);
 
-    cJSON_free(x);
-    cJSON_free(y);
     y=daj_ye(ex3);
     x=daj_xe(ex3);
 
-    mapa[atoi(y)][atoi(x)]=zwroc_enr_pola(ex3);
-
-    cJSON_free(x);
-    cJSON_free(y);
+    mapa[y][x]=zwroc_enr_pola(ex3);
 
     cJSON_Delete(zmienna);
     }
@@ -282,182 +254,172 @@ void ruchkoniec( int a, int b, int mapa[a][b])
     
     if(strcmp(kierunek, "\"N\"") == 0)              
     {
-        if(mapa[1+atoi(y)][1+atoi(x)] == 3 && mapa[1+atoi(y)][atoi(x)] == 3)
+        if(mapa[1+y][1+x] == 3 && mapa[1+y][x] == 3)
         {
+            cJSON_Delete(cus);
             cus=make_request(url_rleft);
         }
-        else if(mapa[1+atoi(y)][1+atoi(x)] != 3 && mapa[atoi(y)][1+atoi(x)] != 3 && mapa[1+atoi(y)][atoi(x)] == 3)
+        else if(mapa[1+y][1+x] != 3 && mapa[y][1+x] != 3 && mapa[1+y][x] == 3)
         {
+            cJSON_Delete(cus);
             cus=make_request(url_rright);
-            cJSON_free(y);
-            cJSON_free(x);
             x=daj_x(cus);
             y=daj_y(cus);
-            mapa[atoi(y)][atoi(x)]=zwroc_nr_pola(cus);
+            mapa[y][x]=zwroc_nr_pola(cus);
         }
-        else if(mapa[1+atoi(y)][1+atoi(x)] != 3 && mapa[atoi(y)][1+atoi(x)] != 3)
+        else if(mapa[1+y][1+x] != 3 && mapa[y][1+x] != 3)
         {
+            cJSON_Delete(cus);
             cus=make_request(url_move);
-            cJSON_free(y);
-            cJSON_free(x);
             x=daj_x(cus);
             y=daj_y(cus);
-            mapa[atoi(y)][atoi(x)]=zwroc_nr_pola(cus);
+            mapa[y][x]=zwroc_nr_pola(cus);
         }
-        else if(mapa[1+atoi(y)][1+atoi(x)] == 1 || mapa[1+atoi(y)][1+atoi(x)] == 2)
+        else if(mapa[1+y][1+x] == 1 || mapa[1+y][1+x] == 2)
         {
+            cJSON_Delete(cus);
             cus=make_request(url_move);
-            cJSON_free(y);
-            cJSON_free(x);
             x=daj_x(cus);
             y=daj_y(cus);
-            mapa[atoi(y)][atoi(x)]=zwroc_nr_pola(cus);
+            mapa[y][x]=zwroc_nr_pola(cus);
+            cJSON_Delete(cus);
             cus=make_request(url_rright);
         }
-        else if(mapa[1+atoi(y)][1+atoi(x)] == 3)
+        else if(mapa[1+y][1+x] == 3)
         {
+            cJSON_Delete(cus);
             cus=make_request(url_move);
-            cJSON_free(x);
-            cJSON_free(y);
             x=daj_x(cus);
             y=daj_y(cus);
-            mapa[atoi(y)][atoi(x)]=zwroc_nr_pola(cus);
+            mapa[y][x]=zwroc_nr_pola(cus);
         }
     }
     else if( strcmp(kierunek, "\"E\"") == 0)
     {
-        if(mapa[1+atoi(y)][1+atoi(x)] != 3 && mapa[1+atoi(y)][atoi(x)] != 3 && mapa[atoi(y)][1+atoi(x)] == 3)
+        if(mapa[1+y][1+x] != 3 && mapa[1+y][x] != 3 && mapa[y][1+x] == 3)
         {
+            cJSON_Delete(cus);
             cus=make_request(url_rright);
-            cJSON_free(y);
-            cJSON_free(x);
             x=daj_x(cus);
             y=daj_y(cus);
-            mapa[atoi(y)][atoi(x)]=zwroc_nr_pola(cus);
+            mapa[y][x]=zwroc_nr_pola(cus);
         }
-        else if(mapa[1+atoi(y)][1+atoi(x)] != 3 && mapa[1+atoi(y)][atoi(x)] != 3)
+        else if(mapa[1+y][1+x] != 3 && mapa[1+y][x] != 3)
         {
+            cJSON_Delete(cus);
             cus=make_request(url_move);
-            cJSON_free(y);
-            cJSON_free(x);
             x=daj_x(cus);
             y=daj_y(cus);
-            mapa[atoi(y)][atoi(x)]=zwroc_nr_pola(cus);
+            mapa[y][x]=zwroc_nr_pola(cus);
         }
-        else if(mapa[1+atoi(y)][1+atoi(x)] == 1 || mapa[1+atoi(y)][1+atoi(x)] == 2)
+        else if(mapa[1+y][1+x] == 1 || mapa[1+y][1+x] == 2)
         {
+            cJSON_Delete(cus);
             cus=make_request(url_move);
-            cJSON_free(y);
-            cJSON_free(x);
             x=daj_x(cus);
             y=daj_y(cus);
-            mapa[atoi(y)][atoi(x)]=zwroc_nr_pola(cus);
+            mapa[y][x]=zwroc_nr_pola(cus);
+            cJSON_Delete(cus);
             cus=make_request(url_rright);
         }
-        else if(mapa[atoi(y)][1+atoi(x)] == 3 && mapa[1+atoi(y)][1+atoi(x)] == 3)
+        else if(mapa[y][1+x] == 3 && mapa[1+y][1+x] == 3)
         {
+            cJSON_Delete(cus);
             cus=make_request(url_rleft);
         }
-        else if(mapa[1+atoi(y)][1+atoi(x)] == 3)
+        else if(mapa[1+y][1+x] == 3)
         {
+            cJSON_Delete(cus);
             cus=make_request(url_move);
-            cJSON_free(y);
-            cJSON_free(x);
             x=daj_x(cus);
             y=daj_y(cus);
-            mapa[atoi(y)][atoi(x)]=zwroc_nr_pola(cus);
+            mapa[y][x]=zwroc_nr_pola(cus);
         }
     }
     else if(strcmp(kierunek, "\"S\"") == 0)                 
     {
-        if(mapa[-1+atoi(y)][-1+atoi(x)] == 3 && mapa[-1+atoi(y)][atoi(x)] == 3)
+        if(mapa[-1+y][-1+x] == 3 && mapa[-1+y][x] == 3)
         {
+            cJSON_Delete(cus);
             cus=make_request(url_rleft);
         }
-        else if(mapa[-1+atoi(y)][-1+atoi(x)] != 3 && mapa[atoi(y)][-1+atoi(x)] != 3 && mapa[-1+atoi(y)][atoi(x)] == 3)
+        else if(mapa[-1+y][-1+x] != 3 && mapa[y][-1+x] != 3 && mapa[-1+y][x] == 3)
         {
+            cJSON_Delete(cus);
             cus=make_request(url_rright);
-            cJSON_free(y);
-            cJSON_free(x);
             x=daj_x(cus);
             y=daj_y(cus);
-            mapa[atoi(y)][atoi(x)]=zwroc_nr_pola(cus);
+            mapa[y][x]=zwroc_nr_pola(cus);
         }
-        else if(mapa[-1+atoi(y)][-1+atoi(x)] != 3 && mapa[atoi(y)][-1+atoi(x)] != 3)
+        else if(mapa[-1+y][-1+x] != 3 && mapa[y][-1+x] != 3)
         {
+            cJSON_Delete(cus);
             cus=make_request(url_move);
-            cJSON_free(y);
-            cJSON_free(x);
             x=daj_x(cus);
             y=daj_y(cus);
-            mapa[atoi(y)][atoi(x)]=zwroc_nr_pola(cus);
+            mapa[y][x]=zwroc_nr_pola(cus);
         }
-        else if(mapa[-1+atoi(y)][-1+atoi(x)] == 1 || mapa[-1+atoi(y)][-1+atoi(x)] == 2)
+        else if(mapa[-1+y][-1+x] == 1 || mapa[-1+y][-1+x] == 2)
         {
+            cJSON_Delete(cus);
             cus=make_request(url_move);
-            cJSON_free(y);
-            cJSON_free(x);
             x=daj_x(cus);
             y=daj_y(cus);
-            mapa[atoi(y)][atoi(x)]=zwroc_nr_pola(cus);
+            mapa[y][x]=zwroc_nr_pola(cus);
+            cJSON_Delete(cus);
             cus=make_request(url_rright);
         }
-        else if(mapa[-1+atoi(y)][-1+atoi(x)] == 3)
+        else if(mapa[-1+y][-1+x] == 3)
         {
+            cJSON_Delete(cus);
             cus=make_request(url_move);
-            cJSON_free(y);
-            cJSON_free(x);
             x=daj_x(cus);
             y=daj_y(cus);
-            mapa[atoi(y)][atoi(x)]=zwroc_nr_pola(cus);
+            mapa[y][x]=zwroc_nr_pola(cus);
         }
     }
     else if( strcmp(kierunek, "\"W\"") == 0)
     {
-        if(mapa[1+atoi(y)][-1+atoi(x)] != 3 && mapa[1+atoi(y)][atoi(x)] != 3 && mapa[atoi(y)][-1+atoi(x)] == 3)
+        if(mapa[1+y][-1+x] != 3 && mapa[1+y][x] != 3 && mapa[y][-1+x] == 3)
         {
+            cJSON_Delete(cus);
             cus=make_request(url_rright);
-            cJSON_free(y);
-            cJSON_free(x);
             x=daj_x(cus);
             y=daj_y(cus);
-            mapa[atoi(y)][atoi(x)]=zwroc_nr_pola(cus);
+            mapa[y][x]=zwroc_nr_pola(cus);
         }
-        else if(mapa[1+atoi(y)][-1+atoi(x)] != 3 && mapa[1+atoi(y)][atoi(x)] != 3)
+        else if(mapa[1+y][-1+x] != 3 && mapa[1+y][x] != 3)
         {
+            cJSON_Delete(cus);
             cus=make_request(url_move);
-            cJSON_free(y);
-            cJSON_free(x);
             x=daj_x(cus);
             y=daj_y(cus);
-            mapa[atoi(y)][atoi(x)]=zwroc_nr_pola(cus);
+            mapa[y][x]=zwroc_nr_pola(cus);
         }
-        if(mapa[1+atoi(y)][-1+atoi(x)] == 1 || mapa[1+atoi(y)][-1+atoi(x)] == 2)
+        if(mapa[1+y][-1+x] == 1 || mapa[1+y][-1+x] == 2)
         {
+            cJSON_Delete(cus);
             cus=make_request(url_move);
-            cJSON_free(y);
-            cJSON_free(x);
             x=daj_x(cus);
             y=daj_y(cus);
-            mapa[atoi(y)][atoi(x)]=zwroc_nr_pola(cus);
+            mapa[y][x]=zwroc_nr_pola(cus);
+            cJSON_Delete(cus);
             cus=make_request(url_rright);
         }
-        else if(mapa[atoi(y)][-1+atoi(x)] == 3 && mapa[1+atoi(y)][-1+atoi(x)] == 3)
+        else if(mapa[y][-1+x] == 3 && mapa[1+y][-1+x] == 3)
         {
+            cJSON_Delete(cus);
             cus=make_request(url_rleft);
         }
-        else if(mapa[1+atoi(y)][-1+atoi(x)] == 3)
+        else if(mapa[1+y][-1+x] == 3)
         {
+            cJSON_Delete(cus);
             cus=make_request(url_move);
-            cJSON_free(y);
-            cJSON_free(x);
             x=daj_x(cus);
             y=daj_y(cus);
-            mapa[atoi(y)][atoi(x)]=zwroc_nr_pola(cus);
+            mapa[y][x]=zwroc_nr_pola(cus);
         }
     }
-    cJSON_free(x);
-    cJSON_free(y);
     cJSON_free(kierunek);
  }
 //  free(url_info);
@@ -477,24 +439,21 @@ void ruchzero( int a, int b, int mapa[a][b])
     char *url_exp =  "http://edi.iem.pw.edu.pl:30000/worlds/api/v1/worlds/explore/qwerty_1" ;
 
     cJSON *cus = make_request(url_info);
-    char *x=daj_x(cus);
-    char *y=daj_y(cus);
-    mapa[atoi(x)][atoi(y)]=zwroc_nr_pola(cus);
+    int x=daj_x(cus);
+    int y=daj_y(cus);
+    mapa[y][x]=zwroc_nr_pola(cus);
     char *kierunek=daj_kier(cus);
 
     while(zero(a,b,mapa)!=0)
     {
 
-    x=daj_x(cus);
-    y=daj_y(cus);
-    kierunek=daj_kier(cus);
-
-    wypisz(a,b,mapa);
-    printf("\n");
+        x=daj_x(cus);
+        y=daj_y(cus);
+        kierunek=daj_kier(cus);
 
   if(strcmp(kierunek, "\"N\"") == 0)                    
  {
-    if(mapa[1+atoi(y)][atoi(x)]==0 || mapa[1+atoi(y)][atoi(x)-1]==0 || mapa[1+atoi(y)][atoi(x)+1]==0)
+    if(mapa[1+y][x]==0 || mapa[1+y][x-1]==0 || mapa[1+y][x+1]==0)
     {
     cJSON *zmienna = make_request(url_exp);
     cJSON *pay = cJSON_GetObjectItemCaseSensitive(zmienna, "payload");
@@ -503,35 +462,28 @@ void ruchzero( int a, int b, int mapa[a][b])
     cJSON *ex1= name->child;
     cJSON *ex2=name->child->next;
     cJSON *ex3=name->child->next->next;
-
-    char *x=daj_xe(ex1);
-    char *y=daj_ye(ex1);
     
-    mapa[atoi(y)][atoi(x)]=zwroc_enr_pola(ex1);
+    int x=daj_xe(ex1);
+    int y=daj_ye(ex1);
     
-    cJSON_free(x);
-    cJSON_free(y);
+    mapa[y][x]=zwroc_enr_pola(ex1);
+    
     y=daj_ye(ex2);
     x=daj_xe(ex2);
 
-    mapa[atoi(y)][atoi(x)]=zwroc_enr_pola(ex2);
+    mapa[y][x]=zwroc_enr_pola(ex2);
 
-    cJSON_free(x);
-    cJSON_free(y);
     y=daj_ye(ex3);
     x=daj_xe(ex3);
 
-    mapa[atoi(y)][atoi(x)]=zwroc_enr_pola(ex3);
-
-    cJSON_free(x);
-    cJSON_free(y);
+    mapa[y][x]=zwroc_enr_pola(ex3);
 
     cJSON_Delete(zmienna);
     }
  }
  else if(strcmp(kierunek, "\"E\"") == 0)
  {
-    if(mapa[-1+atoi(y)][atoi(x)+1]==0 || mapa[atoi(y)][atoi(x)+1]==0 || mapa[1+atoi(y)][atoi(x)+1]==0)
+    if(mapa[-1+y][x+1]==0 || mapa[y][x+1]==0 || mapa[1+y][x+1]==0)
     {
     cJSON *zmienna = make_request(url_exp);
     cJSON *pay = cJSON_GetObjectItemCaseSensitive(zmienna, "payload");
@@ -541,34 +493,27 @@ void ruchzero( int a, int b, int mapa[a][b])
     cJSON *ex2=name->child->next;
     cJSON *ex3=name->child->next->next;
     
-    char *x=daj_xe(ex1);
-    char *y=daj_ye(ex1);
+    int x=daj_xe(ex1);
+    int y=daj_ye(ex1);
     
-    mapa[atoi(y)][atoi(x)]=zwroc_enr_pola(ex1);
+    mapa[y][x]=zwroc_enr_pola(ex1);
     
-    cJSON_free(x);
-    cJSON_free(y);
     y=daj_ye(ex2);
     x=daj_xe(ex2);
 
-    mapa[atoi(y)][atoi(x)]=zwroc_enr_pola(ex2);
+    mapa[y][x]=zwroc_enr_pola(ex2);
 
-    cJSON_free(x);
-    cJSON_free(y);
     y=daj_ye(ex3);
     x=daj_xe(ex3);
 
-    mapa[atoi(y)][atoi(x)]=zwroc_enr_pola(ex3);
-
-    cJSON_free(x);
-    cJSON_free(y);
+    mapa[y][x]=zwroc_enr_pola(ex3);
 
     cJSON_Delete(zmienna);
     }
  }
  else if(strcmp(kierunek, "\"S\"") == 0)            
  {
-    if(mapa[-1+atoi(y)][atoi(x)+1]==0 || mapa[-1+atoi(y)][atoi(x)-1]==0 || mapa[-1+atoi(y)][atoi(x)]==0)
+    if(mapa[-1+y][x+1]==0 || mapa[-1+y][x-1]==0 || mapa[-1+y][x]==0)
     {
     cJSON *zmienna = make_request(url_exp);
         cJSON *pay = cJSON_GetObjectItemCaseSensitive(zmienna, "payload");
@@ -578,34 +523,27 @@ void ruchzero( int a, int b, int mapa[a][b])
     cJSON *ex2=name->child->next;
     cJSON *ex3=name->child->next->next;
     
-    char *x=daj_xe(ex1);
-    char *y=daj_ye(ex1);
+    int x=daj_xe(ex1);
+    int y=daj_ye(ex1);
     
-    mapa[atoi(y)][atoi(x)]=zwroc_enr_pola(ex1);
+    mapa[y][x]=zwroc_enr_pola(ex1);
     
-    cJSON_free(x);
-    cJSON_free(y);
     y=daj_ye(ex2);
     x=daj_xe(ex2);
 
-    mapa[atoi(y)][atoi(x)]=zwroc_enr_pola(ex2);
+    mapa[y][x]=zwroc_enr_pola(ex2);
 
-    cJSON_free(x);
-    cJSON_free(y);
     y=daj_ye(ex3);
     x=daj_xe(ex3);
 
-    mapa[atoi(y)][atoi(x)]=zwroc_enr_pola(ex3);
-
-    cJSON_free(x);
-    cJSON_free(y);
+    mapa[y][x]=zwroc_enr_pola(ex3);
 
     cJSON_Delete(zmienna);
     }
  }
  else if(strcmp(kierunek, "\"W\"") == 0)
  {
-    if(mapa[-1+atoi(y)][atoi(x)-1]==0 || mapa[atoi(y)][atoi(x)-1]==0 || mapa[1+atoi(y)][atoi(x)-1]==0)
+    if(mapa[-1+y][x-1]==0 || mapa[y][x-1]==0 || mapa[1+y][x-1]==0)
     {
     cJSON *zmienna = make_request(url_exp);
     cJSON *pay = cJSON_GetObjectItemCaseSensitive(zmienna, "payload");
@@ -615,27 +553,20 @@ void ruchzero( int a, int b, int mapa[a][b])
     cJSON *ex2=name->child->next;
     cJSON *ex3=name->child->next->next;
     
-    char *x=daj_xe(ex1);
-    char *y=daj_ye(ex1);
+    int x=daj_xe(ex1);
+    int y=daj_ye(ex1);
     
-    mapa[atoi(y)][atoi(x)]=zwroc_enr_pola(ex1);
+    mapa[y][x]=zwroc_enr_pola(ex1);
     
-    cJSON_free(x);
-    cJSON_free(y);
     y=daj_ye(ex2);
     x=daj_xe(ex2);
 
-    mapa[atoi(y)][atoi(x)]=zwroc_enr_pola(ex2);
+    mapa[y][x]=zwroc_enr_pola(ex2);
 
-    cJSON_free(x);
-    cJSON_free(y);
     y=daj_ye(ex3);
     x=daj_xe(ex3);
 
-    mapa[atoi(y)][atoi(x)]=zwroc_enr_pola(ex3);
-
-    cJSON_free(x);
-    cJSON_free(y);
+    mapa[y][x]=zwroc_enr_pola(ex3);
 
     cJSON_Delete(zmienna);
     }
@@ -644,182 +575,173 @@ void ruchzero( int a, int b, int mapa[a][b])
     
     if(strcmp(kierunek, "\"N\"") == 0)              
     {
-        if(mapa[1+atoi(y)][1+atoi(x)] == 3 && mapa[1+atoi(y)][atoi(x)] == 3)
+        if(mapa[1+y][1+x] == 3 && mapa[1+y][x] == 3)
         {
+            cJSON_Delete(cus);
             cus=make_request(url_rleft);
         }
-        else if(mapa[1+atoi(y)][1+atoi(x)] != 3 && mapa[atoi(y)][1+atoi(x)] != 3 && mapa[1+atoi(y)][atoi(x)] == 3)
+        else if(mapa[1+y][1+x] != 3 && mapa[y][1+x] != 3 && mapa[1+y][x] == 3)
         {
+            cJSON_Delete(cus);
             cus=make_request(url_rright);
-            cJSON_free(y);
-            cJSON_free(x);
             x=daj_x(cus);
             y=daj_y(cus);
-            mapa[atoi(y)][atoi(x)]=zwroc_nr_pola(cus);
+            mapa[y][x]=zwroc_nr_pola(cus);
         }
-        else if(mapa[1+atoi(y)][1+atoi(x)] != 3 && mapa[atoi(y)][1+atoi(x)] != 3)
+        else if(mapa[1+y][1+x] != 3 && mapa[y][1+x] != 3)
         {
+            cJSON_Delete(cus);
             cus=make_request(url_move);
-            cJSON_free(y);
-            cJSON_free(x);
             x=daj_x(cus);
             y=daj_y(cus);
-            mapa[atoi(y)][atoi(x)]=zwroc_nr_pola(cus);
+            mapa[y][x]=zwroc_nr_pola(cus);
         }
-        else if(mapa[1+atoi(y)][1+atoi(x)] == 1 || mapa[1+atoi(y)][1+atoi(x)] == 2)
+        else if(mapa[1+y][1+x] == 1 || mapa[1+y][1+x] == 2)
         {
+            cJSON_Delete(cus);
             cus=make_request(url_move);
-            cJSON_free(y);
-            cJSON_free(x);
             x=daj_x(cus);
             y=daj_y(cus);
-            mapa[atoi(y)][atoi(x)]=zwroc_nr_pola(cus);
+            mapa[y][x]=zwroc_nr_pola(cus);
+            cJSON_Delete(cus);
             cus=make_request(url_rright);
         }
-        else if(mapa[1+atoi(y)][1+atoi(x)] == 3)
+        else if(mapa[1+y][1+x] == 3)
         {
+            cJSON_Delete(cus);
             cus=make_request(url_move);
-            cJSON_free(x);
-            cJSON_free(y);
             x=daj_x(cus);
             y=daj_y(cus);
-            mapa[atoi(y)][atoi(x)]=zwroc_nr_pola(cus);
+            mapa[y][x]=zwroc_nr_pola(cus);
         }
     }
     else if( strcmp(kierunek, "\"E\"") == 0)
     {
-        if(mapa[1+atoi(y)][1+atoi(x)] != 3 && mapa[1+atoi(y)][atoi(x)] != 3 && mapa[atoi(y)][1+atoi(x)] == 3)
+        if(mapa[1+y][1+x] != 3 && mapa[1+y][x] != 3 && mapa[y][1+x] == 3)
         {
+            cJSON_Delete(cus);
             cus=make_request(url_rright);
-            cJSON_free(y);
-            cJSON_free(x);
             x=daj_x(cus);
             y=daj_y(cus);
-            mapa[atoi(y)][atoi(x)]=zwroc_nr_pola(cus);
+            mapa[y][x]=zwroc_nr_pola(cus);
         }
-        else if(mapa[1+atoi(y)][1+atoi(x)] != 3 && mapa[1+atoi(y)][atoi(x)] != 3)
+        else if(mapa[1+y][1+x] != 3 && mapa[1+y][x] != 3)
         {
+            cJSON_Delete(cus);
             cus=make_request(url_move);
-            cJSON_free(y);
-            cJSON_free(x);
             x=daj_x(cus);
             y=daj_y(cus);
-            mapa[atoi(y)][atoi(x)]=zwroc_nr_pola(cus);
+            mapa[y][x]=zwroc_nr_pola(cus);
         }
-        else if(mapa[1+atoi(y)][1+atoi(x)] == 1 || mapa[1+atoi(y)][1+atoi(x)] == 2)
+        else if(mapa[1+y][1+x] == 1 || mapa[1+y][1+x] == 2)
         {
+            cJSON_Delete(cus);
             cus=make_request(url_move);
-            cJSON_free(y);
-            cJSON_free(x);
             x=daj_x(cus);
             y=daj_y(cus);
-            mapa[atoi(y)][atoi(x)]=zwroc_nr_pola(cus);
+            mapa[y][x]=zwroc_nr_pola(cus);
+            cJSON_Delete(cus);
             cus=make_request(url_rright);
         }
-        else if(mapa[atoi(y)][1+atoi(x)] == 3 && mapa[1+atoi(y)][1+atoi(x)] == 3)
+        else if(mapa[y][1+x] == 3 && mapa[1+y][1+x] == 3)
         {
+            cJSON_Delete(cus);
             cus=make_request(url_rleft);
         }
-        else if(mapa[1+atoi(y)][1+atoi(x)] == 3)
+        else if(mapa[1+y][1+x] == 3)
         {
+            cJSON_Delete(cus);
             cus=make_request(url_move);
-            cJSON_free(y);
-            cJSON_free(x);
             x=daj_x(cus);
             y=daj_y(cus);
-            mapa[atoi(y)][atoi(x)]=zwroc_nr_pola(cus);
+            mapa[y][x]=zwroc_nr_pola(cus);
         }
     }
     else if(strcmp(kierunek, "\"S\"") == 0)                 
     {
-        if(mapa[-1+atoi(y)][-1+atoi(x)] == 3 && mapa[-1+atoi(y)][atoi(x)] == 3)
+        if(mapa[-1+y][-1+x] == 3 && mapa[-1+y][x] == 3)
         {
+            cJSON_Delete(cus);
             cus=make_request(url_rleft);
         }
-        else if(mapa[-1+atoi(y)][-1+atoi(x)] != 3 && mapa[atoi(y)][-1+atoi(x)] != 3 && mapa[-1+atoi(y)][atoi(x)] == 3)
+        else if(mapa[-1+y][-1+x] != 3 && mapa[y][-1+x] != 3 && mapa[-1+y][x] == 3)
         {
+            cJSON_Delete(cus);
             cus=make_request(url_rright);
-            cJSON_free(y);
-            cJSON_free(x);
             x=daj_x(cus);
             y=daj_y(cus);
-            mapa[atoi(y)][atoi(x)]=zwroc_nr_pola(cus);
+            mapa[y][x]=zwroc_nr_pola(cus);
         }
-        else if(mapa[-1+atoi(y)][-1+atoi(x)] != 3 && mapa[atoi(y)][-1+atoi(x)] != 3)
+        else if(mapa[-1+y][-1+x] != 3 && mapa[y][-1+x] != 3)
         {
+            cJSON_Delete(cus);
             cus=make_request(url_move);
-            cJSON_free(y);
-            cJSON_free(x);
             x=daj_x(cus);
             y=daj_y(cus);
-            mapa[atoi(y)][atoi(x)]=zwroc_nr_pola(cus);
+            mapa[y][x]=zwroc_nr_pola(cus);
         }
-        else if(mapa[-1+atoi(y)][-1+atoi(x)] == 1 || mapa[-1+atoi(y)][-1+atoi(x)] == 2)
+        else if(mapa[-1+y][-1+x] == 1 || mapa[-1+y][-1+x] == 2)
         {
+            cJSON_Delete(cus);
             cus=make_request(url_move);
-            cJSON_free(y);
-            cJSON_free(x);
             x=daj_x(cus);
             y=daj_y(cus);
-            mapa[atoi(y)][atoi(x)]=zwroc_nr_pola(cus);
+            mapa[y][x]=zwroc_nr_pola(cus);
+            cJSON_Delete(cus);
             cus=make_request(url_rright);
         }
-        else if(mapa[-1+atoi(y)][-1+atoi(x)] == 3)
+        else if(mapa[-1+y][-1+x] == 3)
         {
+            cJSON_Delete(cus);
             cus=make_request(url_move);
-            cJSON_free(y);
-            cJSON_free(x);
             x=daj_x(cus);
             y=daj_y(cus);
-            mapa[atoi(y)][atoi(x)]=zwroc_nr_pola(cus);
+            mapa[y][x]=zwroc_nr_pola(cus);
         }
     }
     else if( strcmp(kierunek, "\"W\"") == 0)
     {
-        if(mapa[1+atoi(y)][-1+atoi(x)] != 3 && mapa[1+atoi(y)][atoi(x)] != 3 && mapa[atoi(y)][-1+atoi(x)] == 3)
+        if(mapa[1+y][-1+x] != 3 && mapa[1+y][x] != 3 && mapa[y][-1+x] == 3)
         {
+            cJSON_Delete(cus);
             cus=make_request(url_rright);
-            cJSON_free(y);
-            cJSON_free(x);
             x=daj_x(cus);
             y=daj_y(cus);
-            mapa[atoi(y)][atoi(x)]=zwroc_nr_pola(cus);
+            mapa[y][x]=zwroc_nr_pola(cus);
         }
-        else if(mapa[1+atoi(y)][-1+atoi(x)] != 3 && mapa[1+atoi(y)][atoi(x)] != 3)
+        else if(mapa[1+y][-1+x] != 3 && mapa[1+y][x] != 3)
         {
+            cJSON_Delete(cus);
             cus=make_request(url_move);
-            cJSON_free(y);
-            cJSON_free(x);
             x=daj_x(cus);
             y=daj_y(cus);
-            mapa[atoi(y)][atoi(x)]=zwroc_nr_pola(cus);
+            mapa[y][x]=zwroc_nr_pola(cus);
         }
-        if(mapa[1+atoi(y)][-1+atoi(x)] == 1 || mapa[1+atoi(y)][-1+atoi(x)] == 2)
+        if(mapa[1+y][-1+x] == 1 || mapa[1+y][-1+x] == 2)
         {
+            cJSON_Delete(cus);
             cus=make_request(url_move);
-            cJSON_free(y);
-            cJSON_free(x);
             x=daj_x(cus);
             y=daj_y(cus);
-            mapa[atoi(y)][atoi(x)]=zwroc_nr_pola(cus);
+            mapa[y][x]=zwroc_nr_pola(cus);
+            cJSON_Delete(cus);
             cus=make_request(url_rright);
         }
-        else if(mapa[atoi(y)][-1+atoi(x)] == 3 && mapa[1+atoi(y)][-1+atoi(x)] == 3)
+        else if(mapa[y][-1+x] == 3 && mapa[1+y][-1+x] == 3)
         {
+            cJSON_Delete(cus);
             cus=make_request(url_rleft);
         }
-        else if(mapa[1+atoi(y)][-1+atoi(x)] == 3)
+        else if(mapa[1+y][-1+x] == 3)
         {
+            cJSON_Delete(cus);
             cus=make_request(url_move);
-            cJSON_free(y);
-            cJSON_free(x);
             x=daj_x(cus);
             y=daj_y(cus);
-            mapa[atoi(y)][atoi(x)]=zwroc_nr_pola(cus);
+            mapa[y][x]=zwroc_nr_pola(cus);
         }
     }
-    cJSON_free(x);
-    cJSON_free(y);
+    cJSON_free(kierunek);
  }
  free(url_info);
  free(url_move);
