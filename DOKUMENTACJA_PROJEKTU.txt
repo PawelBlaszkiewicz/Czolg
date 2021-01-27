@@ -10,12 +10,14 @@ Studenci(nr albumu): 	Błaszkiewicz Paweł(311202) ; Malicki Jakub(311264)
 OPIS PROJEKTU:
 
 (1) JAK URUCHAMIAĆ PROGRAM
+
     Kompilacja programu odbywa się przez wykonanie komendy "make" w kompilatorze.
     Następnie, aby program wykonał swoje zadanie nalezy uruchomic komendę "make swiat".
     W wyniku otrzymamy: wypisanie liczby kroków potrzebnych do odkrycia świata, wypisanie świata w postaci dwuwymiarowej tablicy liczb
     oraz nasz odkryty świat zostanie wyeksportowany w postaci pliku .png.
 
 (2) MODUŁY I ICH FUNKCJE
+
     	Kod programy podzieliliśmy na 5 zasadniczych modułów: main, logika, siec, interpretacja, obrazek.
 
     (a) Main opiszemy w ostatnim punkcie dokumentacji jako opis działania programu w całości.
@@ -38,6 +40,7 @@ OPIS PROJEKTU:
 	Zero zaś daje odpowiedź na pytanie, czy wewnątrz tej obwódki zostały pola nieodkryte przez czołg w postaci cyfry zero.
 
 (3) OPIS BIBLIOTEK I STRUKTUR
+
     (a)	Komunikacja programu z serwerem odbywa się przy użyciu funkcji make_request, w której jedynym argumentem jest token, 
 	będący wysyłanym zapytaniem do serwera. Funkcja ta korzysta z szeregu funkcji pochodzących z bibliotek curl i cJSON, 
 	dzięki którym zostaje wysłane zapytanie do serwera, a następnie odpowiedź zwrotna zostaje wstępnie przetworzona. 
@@ -48,14 +51,17 @@ OPIS PROJEKTU:
 	kopiuje odpowiednie tekstury w odpowiednie miejsca w pliku(odpowiadające poszczególnym polom na mapie)
 	a następnie wypełniony obrazek zapisuje w postaci pliku .png na dysku.
 
-    (c) 
+    (c) Jedną z najważniejszych struktur danych używanych w programie jest JSON, obsługiwany przez bibliotekę cJSON. JSON składa się z szeregu par kluczy i wartości.
+	Klucz jest jakoby nazwą danej, której wartość/zawartość może być liczbą, napisem, tablicą etc. JSON jest strukturą drzewiastą.
 
 (4) KOMUNIKACJA
+
 	Nasz program komunikuje sie z stroną "http://edi.iem.pw.edu.pl:30000/" za pomocą zapytań sieciowych HTTP. Serwer zwraca nam wcześniej opisaną strukturę JSON z danymi.
     	Wykorzystujemy adresy wygenerowane na stronie edi aby otrzymać potrzebne nam dane.
     	Na przykład odpowiedź na zapytanie "http://edi.iem.pw.edu.pl:30000/worlds/api/v1/worlds/explore/qwerty_1" zwraca nam JSONa z danymi o trzech polach przed naszym czołgiem.
 
 (5) MAIN
+
 	Nasz główny program main.c zaczynamy od deklaracji tablicy większej od naszej oczekiwanej mapy(w tym przypadku to 50x50) i inicjalizacji jej elementów zerami.
     	Inicjalizujemy wskaźniki char z adresami strony edi służącymi do otrzymywania danych o naszym czołgu oraz podawania mu komend ruchu.
     	Tworzymy strukturę cJSON o nazwie "cus" do przechowywania JSONów z każdego zapytania sieciowego. Tworzymy zmiennie x, y, kierunek do przechowywania współrzędnych czołgu oraz jego kierunku.
@@ -89,5 +95,3 @@ OPIS PROJEKTU:
 
 
 Logo BOT ©Paweł Błaszkiewicz Jakub Malicki 2020-21
-	
-
