@@ -30,14 +30,14 @@ static size_t WriteMemoryCallback(void *data, size_t size, size_t nmemb, void *u
   return realsize;
 }
 
-cJSON *make_request(char *token) // tu mozna zwracać cjsona coułati zwalnianie pamieci
+cJSON *make_request(char *token) 
 { 
   CURL *curl;
   CURLcode res;
   Memory chunk; 
   chunk.size = 0;   
   chunk.response=NULL;  
-  cJSON *xd=(cJSON*) malloc(sizeof(cJSON));
+  cJSON *zwrot ;
  
   curl = curl_easy_init();
  if(curl)
@@ -52,20 +52,17 @@ cJSON *make_request(char *token) // tu mozna zwracać cjsona coułati zwalnianie
 
   res = curl_easy_perform(curl);
   
-  if(res != CURLE_OK) {
+  if(res != CURLE_OK) 
+  {
     fprintf(stderr, "Błąd! curl_easy_perform() niepowodzenie: %s\n",curl_easy_strerror(res));
-  }
-  else {
-    //strncpy(aps, &chunk.response[178], 224);
-    //printf("%s\n", aps);
-    //   printf("%s", chunk.response);
   }
  
   curl_easy_cleanup(curl);
+  
+  zwrot = cJSON_Parse(&chunk.response[178]);
+  free(chunk.response);
+
  }
 
- xd = cJSON_Parse(&chunk.response[178]);
-  free(chunk.response);
- return xd;
-
+ return zwrot;
 }

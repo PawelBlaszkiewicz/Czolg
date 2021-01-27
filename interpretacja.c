@@ -25,7 +25,8 @@ char * daj_pole(cJSON *cus)
 {
     cJSON *pay = cJSON_GetObjectItemCaseSensitive(cus, "payload");
     cJSON *name = cJSON_GetObjectItemCaseSensitive(pay, "field_type");
-    return cJSON_Print(name);
+    char *pol=cJSON_Print(name);
+    return pol;
 }
 
 char * daj_kier(cJSON *cus)
@@ -64,17 +65,17 @@ int zwroc_nr_pola(cJSON *a)
     char *pol=daj_pole(a);
     if(strcmp(pol, "\"grass\"" )==0)
         {
-            cJSON_free(pol);
+            free(pol);
             return 1;
         }
         else if(strcmp(pol,"\"sand\"")==0)
         {
-            cJSON_free(pol);
+            free(pol);
             return 2;
         }
         else if(strcmp(pol,"\"wall\"")==0)
         {
-            cJSON_free(pol);
+            free(pol);
             return 3;
         }
 }
@@ -99,14 +100,19 @@ int zwroc_enr_pola(cJSON *a)
         }
 }
 
-void wypisz(int a,int b,int tab[a][b])
+int daj_krok(char *url)
 {
-    for( int i=0;i<a;i++)
-        {
-            for(int j=0;j<b;j++)
-            {
-            printf("%d ",tab[i][j]);
-            }
-            printf("\n");
-        }
+    char *url_info =  url ;
+    cJSON *cus=make_request(url_info);
+    cJSON *c = cJSON_GetObjectItemCaseSensitive(cus, "payload") ;
+    cJSON *name = cJSON_GetObjectItemCaseSensitive(c, "step");
+
+    char *dd=cJSON_Print(name);
+
+    int g=atoi(dd);
+
+    cJSON_Delete(cus);
+    cJSON_free(dd);
+    
+    return g;
 }

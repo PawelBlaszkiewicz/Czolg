@@ -1,8 +1,25 @@
-all:
-	cc main_curl.c siec.c logika.c interpretacja.c -lcurl -o curl ../cJSON/cJSON.o
+all: program proba proba_png
 
-test:
-	./curl move explore move explore rotate_left move explore move explore rotate_right move explore move explore rotate_right explore move explore move explore rotate_right explore move explore move explore rotate_right explore move explore move explore
+program: main_curl.c
+	cc main.c siec.c logika.c interpretacja.c obrazek.c -lcurl -lpng -o main ../cJSON/cJSON.o
 
-exp:
-	./curl explore rotate_left explore rotate_left explore rotate_left explore rotate_left
+proba: proba.c
+	cc proba.c -o proba -lcurl ../cJSON/cJSON.o
+
+proba_png: proba3.c
+	cc proba3.c obrazek.c -lpng -o proba3
+
+swiat: program
+	./main mapa.txt minecraft_tiles.png mapa_swiata.png
+
+pamiec: program
+	valgrind ./main mapa.txt minecraft_tiles.png mapa_swiata.png 
+
+fun: program
+	./main mapa.txt bloczki.png mapa_swiata2.png 
+
+test_cjson : 
+	valgrind ./proba
+
+test_png :
+	./proba3 proba3_mapa_png.txt minecraft_tiles.png proba3_png.png

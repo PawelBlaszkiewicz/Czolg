@@ -1,0 +1,93 @@
+                                                       DOKUMENTACJA TECHNICZNA PROJEKTU
+
+
+
+Przedmiot: 		Podstawy programowania, Seminarium
+Prowadzący: 		dr inż. Robert Szmurło
+Studenci(nr albumu): 	Błaszkiewicz Paweł(311202) ; Malicki Jakub(311264)
+
+
+OPIS PROJEKTU:
+
+(1) JAK URUCHAMIAĆ PROGRAM
+    Kompilacja programu odbywa się przez wykonanie komendy "make" w kompilatorze.
+    Następnie, aby program wykonał swoje zadanie nalezy uruchomic komendę "make swiat".
+    W wyniku otrzymamy: wypisanie liczby kroków potrzebnych do odkrycia świata, wypisanie świata w postaci dwuwymiarowej tablicy liczb
+    oraz nasz odkryty świat zostanie wyeksportowany w postaci pliku .png.
+
+(2) MODUŁY I ICH FUNKCJE
+    	Kod programy podzieliliśmy na 5 zasadniczych modułów: main, logika, siec, interpretacja, obrazek.
+
+    (a) Main opiszemy w ostatnim punkcie dokumentacji jako opis działania programu w całości.
+
+    (b) Moduł "siec" odpowiada za komunikację z serwerem. 
+        Ze względu na możliwe opóźnienia odpowiedzi z serwera na nasze zapytania sieciowe korzystamy z funkcji Write_Memory_Callback.
+        Funkcja ta zostanie wywołana, gdy program otrzyma dane zwrotne z serwera z odpowiedzią na nasze zapytanie sieciowie.
+     	Funkcja make_request wykonuje zapytanie sieciowe korzystając z przekazywanego przez nas adresu internetowego.
+    
+    (c) Moduł "interpretacja" odpowiada za odczytywanie danych zwróconych nam przez funkcję make_request w postaci cJSONa.
+	Funkcje z tego modułu zwracają nam potrzebne dane wg swojej nazwy. Są to: współrzędne czołgu, typ pola na jakim sie znajdujemy,
+	kierunek zwrotu czołgu i obecną wykonaną liczbe kroków. Odpowiednio mamy analogiczne funkcje dla JSONa z informacja o eksploracji świata.
+	Funkcje "zwroc_nr_pola" oraz "zwroc_enr_pola" zwracają liczbę dla danego pola: 1 - grass, 2 - sand, 3 - wall.
+
+    (d) Moduł "obrazek" odpowiada za wczytanie macierzy z teksturami i stworzenie nowego pliku .png będącego zobrazowaniem mapy. 
+	Obrazek tworzymy na podstawie pliku .txt, w którym znajduje się mapa utworzona z liczb 1, 2, 3 przydzielonych do odpowiednich pól na mapie.
+
+    (e) Moduł "logika" odpowiada za poruszanie czołgu, eksplorowanie oraz operacje na tablicy.
+	Bardzo ważne są funkcje "zero" oraz "krance". Krance mówią nam, czy nasza mapa posiada zamkniętą obwódkę stworzoną z ściany, czyli cyfry 3.
+	Zero zaś daje odpowiedź na pytanie, czy wewnątrz tej obwódki zostały pola nieodkryte przez czołg w postaci cyfry zero.
+
+(3) OPIS BIBLIOTEK I STRUKTUR
+    (a)	Komunikacja programu z serwerem odbywa się przy użyciu funkcji make_request, w której jedynym argumentem jest token, 
+	będący wysyłanym zapytaniem do serwera. Funkcja ta korzysta z szeregu funkcji pochodzących z bibliotek curl i cJSON, 
+	dzięki którym zostaje wysłane zapytanie do serwera, a następnie odpowiedź zwrotna zostaje wstępnie przetworzona. 
+	Funkcja make_request zwraca strukturę cJSON, z której potem program przy użyciu funkcji takich jak daj_x czy daj_y wyciąga potrzebne informacje.
+
+    (b) Moduł odpowiadający za tworzenie obrazka świata, korzysta z biblioteki png. Przy użyciu zawartych funkcji, program ładuje w pamięci matrycę tekstur, 
+	tworzy miejsce na edycję nowego pliku, następnie iteruje po wszystkich elementach odkrytej mapy (w postaci tablicy 2D liczb typu int) i 
+	kopiuje odpowiednie tekstury w odpowiednie miejsca w pliku(odpowiadające poszczególnym polom na mapie)
+	a następnie wypełniony obrazek zapisuje w postaci pliku .png na dysku.
+
+    (c) 
+
+(4) KOMUNIKACJA
+	Nasz program komunikuje sie z stroną "http://edi.iem.pw.edu.pl:30000/" za pomocą zapytań sieciowych HTTP. Serwer zwraca nam wcześniej opisaną strukturę JSON z danymi.
+    	Wykorzystujemy adresy wygenerowane na stronie edi aby otrzymać potrzebne nam dane.
+    	Na przykład odpowiedź na zapytanie "http://edi.iem.pw.edu.pl:30000/worlds/api/v1/worlds/explore/qwerty_1" zwraca nam JSONa z danymi o trzech polach przed naszym czołgiem.
+
+(5) MAIN
+	Nasz główny program main.c zaczynamy od deklaracji tablicy większej od naszej oczekiwanej mapy(w tym przypadku to 50x50) i inicjalizacji jej elementów zerami.
+    	Inicjalizujemy wskaźniki char z adresami strony edi służącymi do otrzymywania danych o naszym czołgu oraz podawania mu komend ruchu.
+    	Tworzymy strukturę cJSON o nazwie "cus" do przechowywania JSONów z każdego zapytania sieciowego. Tworzymy zmiennie x, y, kierunek do przechowywania współrzędnych czołgu oraz jego kierunku.
+    	Inicjalizujemy również zmienną bilans_skrety potrzebną do właściwego działania algorytmu poruszania czołgiem.
+
+    (a) Rozpoczynamy pierwszą funkcję iterującą while. Wykonuje się dopóki nie utworzy się obwódka mapy z cyfry 3.
+    	Każdą pętlę zaczynamy od pobrania obecnych współrzędnych czołgu oraz jego kierunku. Obie współrzędne zwiekszamy o 20 aby w razie wystąpienia ujemnych współrzędnych program działał.
+    	Funkcja "exploruj_jesli_musisz" jest bardzo prosta. Jeśli przed czołgiem jest przynajmniej jedno pole, którego nie zna(będące zerem) to wykonuje eksplorację. 
+    	Jeśli na podstawie współrzędnych i kierunku stwierdza, że zna wszystkie pola, to nie eksploruje.
+    	Funkcja "ruszaj" zawiera algorytm poruszania się. Działa on tak: czołg za każdym razem sprawdza pola po swojej(!) prawej stronie i przed nim. 
+    	Jeśli znajduje sie przy ścianie to będzie cały czas poruszał się zgodnie z jej brzegiem. Jeśli przed sobą będzie miał ścianę to obróci się w lewo, żeby mieć ja po swojej prawej.
+    	Gdy po jego prawej znajdują się pola inne niż ściana, będzie poruszał sie prosto aż do trafienia na ścianę i wykonania instrukcji z poprzedniego zdania. 
+    	W ten sposób czołg jest w stanie odkryć mapę aż do utworzenia otoczki z ścian. Jednak jest możliwość, że zacznie jeździć dookoła wysepki.
+    	W tym miejscu korzystamy ze zmiennej bilans_skrety: jeśli bilans obrotów w jedna strone będzie równy 4 to znaczy, że czołg porusza sie w przysłowiowe kółko.
+    	Jeśli nastąpi taka sytuacja to czołg robi skręt w lewo i pod wpływem algorytmu nie zapętla sie wokół wysepki.
+	W ten sposób odkrywamy mapę aż do utworzenia otoczki.
+
+    (b) Pobieramy długość i szerokość otoczki i inicjalizujemy tablicę będącą odwzorowaniem mapy, którą mapy odkryć.
+	Jeśli w środku nowej tablicy są zera, czyli pola nieznane, rozpoczynamy drugą funkcje iterującą while do momentu gdy nie poznamy wszystkich elementów tablicy.
+	Wnętrze drugiego while jest podobne do pierwszego. Pojawia sie nowa funkcja "ruszaj_do_zera", która ma pokierować czołg no nieodkrytych pól wewnątrz tablicy.
+	Działa ona w następujący sposób: sprawdza, gdzie znajduje się pierwsze zero w tablicy. Jeśli jedna z jego współrzędnych pokrywa się współrzędnymi czołgu to 
+	czołg obraca się w stronę zera. Jesli na jego drodze jest trawa lub piasek to idzie do przodu. Jednak jeśli przed nim znajduje sie ściana to włącza poruszanie po krawędzi na 5 ruchów.
+	W tylu ruchach powinien przemieścić się poza oś zera. Poza jedną z tych osi porusza się wcześniej opisanym algorytmem ruchu po krawędzi ściany.
+	Iteracja kończy się, gdy odkryliśmy całą mapę.
+
+    (c) Pobieramy liczbę kroków z początku programu i po odkryciu mapy a następnie zwracamy ich różnicę pomniejszoną o 2 aby uzyskać rzeczywistą liczbe wykonanych kroków.
+	"Odwracamy" nową mapę względem osi przechodzącej przez jej środek w poziomie. Musimy to zrobić, gdyż zapis w tablicy współrzędnych w postaci [x][y] różni się od sposobu zapisu 
+	współrzędnych na stronie w postaci [y][x]. Wypisujemy tablicę funkcją wypisz a potem zapisujemy do pliku będącego pierwszym argumentem linii komend.
+	Tworzymy plik .png funkcją "narysuj_mape_png" pobierając matrycę tekstur z pliku wpisanego jako drugi argument i zapisując do pliku będącego trzecim argumentem linii komend.
+	Zamykamy "fout" jak nakazuje dobra praktyka i kończymy main błogim "return 0;".
+
+
+Logo BOT ©Paweł Błaszkiewicz Jakub Malicki 2020-21
+	
+
