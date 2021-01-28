@@ -1,6 +1,6 @@
 all: program proba proba_png
 
-program: main_curl.c
+program: main.c
 	cc main.c siec.c logika.c interpretacja.c obrazek.c -lcurl -lpng -o main ../cJSON/cJSON.o
 
 proba: proba.c

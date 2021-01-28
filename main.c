@@ -24,7 +24,7 @@ int main(int argc, char **argv)
     char *url_move =  "http://edi.iem.pw.edu.pl:30000/worlds/api/v1/worlds/move/qwerty_1" ;
     char *url_exp =  "http://edi.iem.pw.edu.pl:30000/worlds/api/v1/worlds/explore/qwerty_1" ;
 
-    int kroki_na_początku=daj_krok(url_info);
+    int kroki_na_poczatku=daj_krok(url_info);
 
     cJSON *cus = make_request(url_info);
     int x=daj_x(cus);
@@ -80,7 +80,7 @@ int main(int argc, char **argv)
     cJSON_Delete(cus);
 
     int kroki_na_koniec=daj_krok(url_info);
-    printf("STEP : %d\n", kroki_na_koniec-kroki_na_początku-2);
+    printf("STEP : %d\n", kroki_na_koniec-kroki_na_poczatku-2);
 
     odwroc(dlugosc_mapy , szerokosc_mapy , nowa_mapa);
     wypisz(dlugosc_mapy , szerokosc_mapy , nowa_mapa);
