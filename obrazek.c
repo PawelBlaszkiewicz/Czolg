@@ -115,21 +115,6 @@ void write_png_file(char *filename, int width, int height,
   png_destroy_write_struct(&png, &info);
 }
 
-void process_png_file(int width, int height, png_bytep *row_pointers) {
-  for(int y = 0; y < height; y++) {
-    png_bytep row = row_pointers[y];
-    for(int x = 0; x < width; x++) {
-      png_bytep px = &(row[x * 4]);
-      // Do something awesome for each pixel here...
-      //printf("%4d, %4d = RGBA(%3d, %3d, %3d, %3d)\n", x, y, px[0], px[1], px[2], px[3]);
-      // px - wskazuje na skladowa R pixela o wspolrzednych x,y!
-      (*px) = (int) (*px) * 0.75;
-      *(px+1) = (int) (*(px+1)) * 0.75;
-      *(px+2) = (int) (*(px+2)) * 0.75;
-    }
-  }
-}
-
 png_bytep * create_image(int width, int height) {
   png_bytep *row_pointers = (png_bytep*)malloc(sizeof(png_bytep) * height);
   for(int y = 0; y < height; y++) {
